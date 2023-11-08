@@ -15,7 +15,6 @@ class Encoder(nn.Module):
     self.hidden_layers = nn.ModuleList()
     for i in range(1, len(encoderSettings['hiddenDim'])):
       self.hidden_layers.append(nn.Linear(encoderSettings['hiddenDim'][i - 1], encoderSettings['hiddenDim'][i]))
-      print('here encoder')
 
     # Define the mean and log variance layers
     
@@ -57,7 +56,6 @@ class Decoder(nn.Module):
     self.hidden_layers = nn.ModuleList()
     for i in range(len(decoderSettings['hiddenDim']) - 1, 0, -1):
       self.hidden_layers.append(nn.Linear(decoderSettings['hiddenDim'][i], decoderSettings['hiddenDim'][i - 1]))
-      print('here decoder')
     # Define the mean and log variance layers
   
     # self.linear1 = nn.Linear(decoderSettings['latentDim'], decoderSettings['hiddenDim'])

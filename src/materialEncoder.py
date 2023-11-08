@@ -12,7 +12,7 @@ class MaterialEncoder:
   def __init__(self, trainingData, dataInfo, dataIdentifier, vaeSettings):
     self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # self.device = "cpu"
-    print(self.device)
+    # print(self.device)
     self.trainingData, self.dataInfo = trainingData, dataInfo
     self.dataIdentifier = dataIdentifier
     self.vaeSettings = vaeSettings
@@ -26,8 +26,8 @@ class MaterialEncoder:
   #--------------------------#
   def trainAutoencoder(self, numEpochs, klFactor, savedNet, learningRate):
     opt = torch.optim.Adam(self.vaeNet.parameters(), learningRate)
-    ms = [5000,10000,20000,50000,120000,200000]
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(opt, milestones=ms, gamma=1)    
+    ms = [6000,12000,20000]
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(opt, milestones=ms, gamma=0.8)    
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # device = "cpu"
 
@@ -52,7 +52,7 @@ class MaterialEncoder:
       if(epoch%500 == 0):
         print('Iter {:d} reconLoss {:.2E} klLoss {:.2E} loss {:.2E}'.\
               format(epoch, reconLoss.item(), klLoss.item(), loss.item()))
-        print(f"Learning Rate: {opt.param_groups[0]['lr']}")
+        # print(f"Learning Rate: {opt.param_groups[0]['lr']}")
     self.vaeNet.encoder.isTraining = False
     with open('./results/vaeTrained.pkl', 'wb+') as f:
       pickle.dump([self.vaeNet.encoder.state_dict()], f)
