@@ -54,8 +54,8 @@ class MaterialEncoder:
               format(epoch, reconLoss.item(), klLoss.item(), loss.item()))
         # print(f"Learning Rate: {opt.param_groups[0]['lr']}")
     self.vaeNet.encoder.isTraining = False
-    with open('./results/vaeTrained.pkl', 'wb+') as f:
-      pickle.dump([self.vaeNet.encoder.state_dict()], f)
+    # with open('./results/vaeTrained.pkl', 'wb+') as f:
+    #   pickle.dump([self.vaeNet.encoder.state_dict()], f)
     return convgHistory
   #--------------------------#
   def getClosestMaterialFromZ(self, z, numClosest = 1):
